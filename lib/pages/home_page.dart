@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/weather_service.dart';
+import '../services/places_service.dart';
+import '../services/pinyin_converter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,34 +15,48 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // 預設查詢台南（拼音: Tainan）
+    // 預設查詢台南
     weatherData = WeatherService().fetchWeather('Tainan');
   }
 
-  // 查詢天氣
-  void _searchWeather() {
-    setState(() {
-      if (cityController.text.isEmpty) {
-        // 如果沒有輸入城市名，使用台南的拼音
-        weatherData = WeatherService().fetchWeather('Tainan');
-      } else {
-        // 根據城市名查詢天氣
-        weatherData = WeatherService().fetchWeather(cityController.text);
-      }
-    });
+  void searchWeather(String inputChinese) {
+    String pinyin = PinyinConverter.toPinyin(inputChinese);
+    print('🔍 查詢拼音城市: $pinyin');
+    // 呼叫 Weather API，例如 OpenWeatherMap
   }
+
+void _searchWeather() async {
+  final input = cityController.text.trim();
+  final query = input.isEmpty ? 'Tainan' : input;
+
+  final placesService = PlacesService();
+  final englishCity = await placesService.getEnglishCity(query);
+
+  String cityToSearch;
+
+  if (englishCity != null) {
+    cityToSearch = englishCity;
+    print('✅ 使用 Google Places 取得英文地名: $englishCity');
+  } else {
+    // 若 Places 無法解析，則用拼音轉換
+    final pinyin = PinyinConverter.toPinyin(query);
+    cityToSearch = pinyin;
+    print('⚠️ 使用拼音備案查詢: $pinyin');
+  }
+
+  setState(() {
+    weatherData = WeatherService().fetchWeather(cityToSearch);
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('天氣查詢'),
-      ),
+      appBar: AppBar(title: Text('天氣查詢')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // 輸入框
             TextField(
               controller: cityController,
               decoration: InputDecoration(
@@ -52,31 +68,32 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 20),
-            // 顯示天氣資料
             FutureBuilder<Map<String, dynamic>>(
               future: weatherData,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return CircularProgressIndicator();
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('無法取得天氣資料'));
+                  return Text('取得天氣資料失敗');
                 } else if (!snapshot.hasData) {
-                  return Center(child: Text('無數據'));
+                  return Text('無資料');
                 }
 
-                var data = snapshot.data!;
+                final data = snapshot.data!;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('城市: ${data['name']}', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Text('天氣: ${data['weather'][0]['description']}', style: TextStyle(fontSize: 18)),
-                    Text('溫度: ${data['main']['temp']}°C', style: TextStyle(fontSize: 18)),
-                    Text('最小溫度: ${data['main']['temp_min']}°C', style: TextStyle(fontSize: 18)),
-                    Text('最大溫度: ${data['main']['temp_max']}°C', style: TextStyle(fontSize: 18)),
-                    Text('濕度: ${data['main']['humidity']}%', style: TextStyle(fontSize: 18)),
-                    Text('風速: ${data['wind']['speed']} m/s', style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 20),
+                    Text(
+                      '城市: ${data['name']}',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('天氣: ${data['weather'][0]['description']}'),
+                    Text('溫度: ${data['main']['temp']}°C'),
+                    Text('濕度: ${data['main']['humidity']}%'),
+                    Text('風速: ${data['wind']['speed']} m/s'),
                   ],
                 );
               },
