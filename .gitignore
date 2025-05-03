@@ -11,6 +11,8 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+# 忽略 .env 文件
+.env
 
 # IntelliJ related
 *.iml
