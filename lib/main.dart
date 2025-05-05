@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app.dart';
-
+//純初始化
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
@@ -11,5 +11,6 @@ Future<void> main() async {
     print('❌ 無法加載 .env 文件: $e');
   }
 
-  runApp(const SkywaterApp());
+  runApp(SkywaterApp());
 }
+

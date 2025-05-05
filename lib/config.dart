@@ -1,4 +1,4 @@
-// lib/config.dart
+//config管理或是用dotenv可能更簡便
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppConfig {

@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "appTitle": "Skywater",
+  "home": "Home",
+  "settings": "Settings",
+  "about": "About",
+  "settingsDescription": "This is the settings page.",
+  "chinese": "Chinese",
+  "english": "English"
+}

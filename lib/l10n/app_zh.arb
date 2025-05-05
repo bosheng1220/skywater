@@ -1,0 +1,10 @@
+{
+  "@@locale": "zh",
+  "appTitle": "天水",
+  "home": "首頁",
+  "settings": "設定",
+  "about": "關於",
+  "settingsDescription": "這是設定頁。",
+  "chinese": "中文",
+  "english": "英文"
+}

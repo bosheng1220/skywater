@@ -1,6 +1,6 @@
 name: skywater
 description: "A new Flutter project."
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -14,6 +14,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.3.0
   lpinyin: ^2.0.2
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -21,9 +24,12 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+  uses-material-design: true
+  generate: true
   assets:
     - assets/images/rain.jpeg
     - assets/images/sun.jpeg
     - assets/images/wind.jpeg
     - .env
-  uses-material-design: true
+
+
