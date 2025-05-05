@@ -21,7 +21,7 @@ class SkywaterApp extends StatefulWidget {
 
 class _SkywaterAppState extends State<SkywaterApp> {
   int _currentIndex = 0;
-  Locale _locale = const Locale('en', 'US'); // 預設語言為英文
+  Locale _locale = const Locale('zh'); // 預設語言設定位置
 
   final List<Widget> _pages = [HomePage(), SettingsPage(), AboutPage()];
 
@@ -29,7 +29,7 @@ class _SkywaterAppState extends State<SkywaterApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Skywater',
-      locale: _locale, // 使用當前語言
+      locale: _locale, 
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -44,7 +44,7 @@ class _SkywaterAppState extends State<SkywaterApp> {
             return supportedLocale;
           }
         }
-        return const Locale('en');
+        return const Locale('zh');
       },
       home: Builder(
         builder:
