@@ -1,0 +1,46 @@
+lib/
+├── core/                         # 共用基礎層 (utils, constants, environment)
+│   ├── constants/
+│   ├── env/
+│   ├── utils/
+│   └── theme/
+│
+├── config/                       # 設定檔，放 app 配置 (app_config.dart)
+│   └── app_config.dart           # 用來儲存應用的基本配置與環境
+│
+├── data/                         # 資料層 (models, services, repositories)
+│   ├── models/                   # 資料模型
+│   │   └── weather.dart
+│   ├── services/                 # 用來和外部 API 溝通的服務層
+│   │   ├── pinyin_converter.dart
+│   │   ├── places_service.dart
+│   │   └── weather_service.dart
+│   └── repositories/             # 儲存資料庫或 API 請求的邏輯
+│       └── weather_repository.dart
+│
+├── domain/                       # 業務邏輯層，包含 use cases
+│   ├── usecases/
+│   │   └── fetch_weather.dart
+│   └── repositories/             # 定義 repository 的介面
+│       └── weather_repository.dart
+│
+├── presentation/                 # UI 層，展示邏輯
+│   ├── pages/                    # 每個頁面的視圖
+│   │   ├── about_page.dart
+│   │   ├── home_page.dart
+│   │   └── settings_page.dart
+│   ├── widgets/                  # 可重用的 UI 元件
+│   │   └── weather_card.dart
+│   └── providers/                # 狀態管理，可能會使用 riverpod 或 bloc
+│
+├── l10n/                         # 語言翻譯相關
+│   ├── app_en.arb
+│   ├── app_ja.arb
+│   ├── app_localizations.dart
+│   ├── app_localizations_en.dart
+│   ├── app_localizations_ja.dart
+│   ├── app_localizations_zh.dart
+│   └── app_zh.arb
+│
+├── main.dart                     # 應用啟動入口
+└── config.dart                   # 用來存放啟動環境配置 (例如 `config.dart` 可根據 dev/prod 切換)
