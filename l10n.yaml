@@ -5,4 +5,5 @@ output-class: AppLocalizations
 preferred-supported-locales:
   - en
   - zh
+  - ja
 synthetic-package: false

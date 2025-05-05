@@ -16,7 +16,6 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(AppLocalizations.of(context)!.settingsDescription), // 顯示設定頁描述
-
             // 切換語言的按鈕
             ElevatedButton(
               onPressed: () {
@@ -31,6 +30,12 @@ class SettingsPage extends StatelessWidget {
                 _changeLanguage(context, Locale('en', 'US'));
               },
               child: Text(AppLocalizations.of(context)!.english),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                SkywaterApp.setLocale(context, const Locale('ja', 'JP'));
+              },
+              child: Text(AppLocalizations.of(context)!.japanese),
             ),
           ],
         ),
